@@ -4,16 +4,9 @@
   # Nixpkgs / NixOS version to use.
   inputs.nixpkgs.url = "nixpkgs/nixos-21.05";
 
-  # Upstream source tree(s).
-  inputs.meta-press-src = {
-    url = "git+https://framagit.org/Siltaar/meta-press-ext";
-    flake = false;
-  };
-
-  outputs = { self, nixpkgs, meta-press-src }:
+  outputs = { self, nixpkgs }:
     let
-      # Generate a user-friendly version numer.
-      version = builtins.substring 0 8 meta-press-src.lastModifiedDate;
+      version = "1.7.6";
 
       # System types to support.
       supportedSystems = [ "x86_64-linux" ];
@@ -40,21 +33,17 @@
               (fetchFirefoxAddon {
                 name = "meta-press-es"; # Has to be unique!
                 url =
-                  "https://addons.mozilla.org/firefox/downloads/file/3759736/meta_presses-1.7.6-an+fx.xpi";
+                  "https://addons.mozilla.org/firefox/downloads/file/3759736/meta_presses-${version}-an+fx.xpi";
                 sha256 = "02glmx9qmra39mpsrsk09wdgx8wgdg45j00ls4gcibmi2n5d4dxi";
               })
             ];
           };
       };
 
-      # Provide some binary packages for selected system types.
       packages = forAllSystems
         (system: { inherit (nixpkgsFor.${system}) firefox-meta-press; });
 
-      # flake provides only one package or there is a clear "main"
-      # package.
       defaultPackage =
         forAllSystems (system: self.packages.${system}.firefox-meta-press);
-
     };
 }
