@@ -1,6 +1,10 @@
-# [Meta-Press.es](https://www.meta-press.es/)
+# Meta-Press.es
 
-_Meta-Press.es is a press search engine, in the shape of a browser add-on._
+Decentralized search engine & automatized press reviews
+
+* Explore the press with no middlemen between the newspapers and your web browser.
+* Discover millions of results within seconds and explore the last ones in Firefox via this addon.
+* Schedule searches, select your press review and export it in a few clicks.
 
 ## Nix
 
