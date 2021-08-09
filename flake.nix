@@ -1,8 +1,9 @@
 {
-  description = "Decentralized search engine & automatized press reviews - firefox extension";
+  description =
+    "Decentralized search engine & automatized press reviews - firefox extension";
 
   # Nixpkgs / NixOS version to use.
-  inputs.nixpkgs.url = "nixpkgs/nixos-21.05";
+  inputs.nixpkgs.url = "nixpkgs/21.05";
 
   outputs = { self, nixpkgs }:
     let
