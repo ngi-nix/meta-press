@@ -5,9 +5,16 @@
   # Nixpkgs / NixOS version to use.
   inputs.nixpkgs.url = "nixpkgs/21.05";
 
-  outputs = { self, nixpkgs }:
+  inputs.meta-press = {
+    url = "https://framagit.org/Siltaar/meta-press-ext";
+    flake = false;
+    submodules = true;
+    type = "git";
+  };
+
+  outputs = { self, nixpkgs, meta-press }:
     let
-      version = "1.7.6";
+      version = "1.7.7";
 
       # System types to support.
       supportedSystems = [ "x86_64-linux" ];
