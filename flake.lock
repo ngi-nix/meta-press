@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "meta-press": {
+    "meta-press-src": {
       "flake": false,
       "locked": {
         "lastModified": 1628637807,
@@ -35,7 +35,7 @@
     },
     "root": {
       "inputs": {
-        "meta-press": "meta-press",
+        "meta-press-src": "meta-press-src",
         "nixpkgs": "nixpkgs"
       }
     }
