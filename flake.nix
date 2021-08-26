@@ -126,9 +126,8 @@
       ];
 
       packages = forAllSystems (system: {
-        inherit (nixpkgsFor.${system}) meta-press;
-        inherit (nixpkgsFor.${system}) firefox-meta-press;
-        inherit (nixpkgsFor.${system}) firefox-meta-press-pinned;
+        inherit (nixpkgsFor.${system})
+          meta-press firefox-meta-press firefox-meta-press-pinned;
       });
 
       defaultPackage =
