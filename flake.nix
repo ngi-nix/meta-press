@@ -2,8 +2,9 @@
   description =
     "Decentralized search engine & automatized press reviews - firefox extension";
 
-  # Nixpkgs / NixOS version to use.
-  inputs.nixpkgs.url = "nixpkgs/21.05";
+  # Nixpkgs pinned to a commit with that allows overriding the source of firefox addons
+  # Change this to the release after 21.05 when released
+  inputs.nixpkgs.url = "nixpkgs/dacaba9b9a886bad92d25ba1d87a84a65cc1298b";
 
   inputs.meta-press-src = {
     url = "https://framagit.org/Siltaar/meta-press-ext";
@@ -66,18 +67,16 @@
 
     in {
 
-      # A Nixpkgs overlay.
       overlay = final: prev: {
         meta-press = final.callPackage meta-press { };
 
         firefox-meta-press-pinned =
-          let inherit (final) wrapFirefox firefox-unwrapped fetchFirefoxAddon;
-          in wrapFirefox firefox-unwrapped {
+          let inherit (final) wrapFirefox firefox-esr-unwrapped fetchFirefoxAddon;
+          in wrapFirefox firefox-esr-unwrapped {
             nixExtensions = [
               (fetchFirefoxAddon {
                 name = "meta-press-es"; # Has to be unique!
-                url =
-                  "https://addons.mozilla.org/firefox/downloads/file/3759736/meta_presses-${version}-an+fx.xpi";
+                url = "https://addons.mozilla.org/firefox/downloads/file/3759736/meta_presses-${version}-an+fx.xpi";
                 sha256 = "02glmx9qmra39mpsrsk09wdgx8wgdg45j00ls4gcibmi2n5d4dxi";
               })
             ];
@@ -85,37 +84,14 @@
 
         firefox-meta-press = let
           inherit (final)
-            lib meta-press stdenv wrapFirefox firefox-unwrapped
+            lib meta-press stdenv wrapFirefox firefox-esr-unwrapped
             fetchFirefoxAddon;
-        in wrapFirefox firefox-unwrapped {
+        in wrapFirefox firefox-esr-unwrapped {
           nixExtensions = [
-            # Waiting for a pull request to be merged into nixpkgs
-            # https://github.com/NixOS/nixpkgs/pull/134427
-            # ((fetchFirefoxAddon {
-            # name = "meta-press-es"; # Has to be unique!
-            # src = "${meta-press.outPath}/firefox_addon.xpi";
-            # }))
-            (stdenv.mkDerivation rec {
-              name = "meta-press-es";
-              extid = "nixos@${name}";
-              passthru = { inherit extid; };
-              nativeBuildInputs = with prev.pkgs; [ coreutils unzip zip jq ];
+            ((fetchFirefoxAddon {
+              name = "meta-press-es"; # Has to be unique!
               src = "${meta-press.outPath}/firefox_addon.xpi";
-              builder = prev.writeScript "xpibuilder" ''
-                source $stdenv/setup
-
-                header "firefox addon $name into $out"
-
-                UUID="${extid}"
-                mkdir -p "$out/$UUID"
-                unzip -q ${src} -d "$out/$UUID"
-                NEW_MANIFEST=$(jq '. + {"applications": { "gecko": { "id": "${extid}" }}, "browser_specific_settings":{"gecko":{"id": "${extid}"}}}' "$out/$UUID/manifest.json")
-                echo "$NEW_MANIFEST" > "$out/$UUID/manifest.json"
-                cd "$out/$UUID"
-                zip -r -q -FS "$out/$UUID.xpi" *
-                rm -r "$out/$UUID"
-              '';
-            })
+            }))
           ];
         };
       };
