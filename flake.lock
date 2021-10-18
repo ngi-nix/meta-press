@@ -1,0 +1,45 @@
+{
+  "nodes": {
+    "meta-press-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1628637807,
+        "narHash": "sha256-3OlGMvZaQLKnlszP/T4YPCigN4PzwnGO/zpsmkzPfq4=",
+        "ref": "master",
+        "rev": "d994d3cd1215606376c38a5b5f50cb861819488d",
+        "revCount": 420,
+        "submodules": true,
+        "type": "git",
+        "url": "https://framagit.org/Siltaar/meta-press-ext"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://framagit.org/Siltaar/meta-press-ext"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1633702113,
+        "narHash": "sha256-AGllJLIJ5lE9Ra0eJ1KtM82+cb8wmSoP2dpMvHGJTb0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dacaba9b9a886bad92d25ba1d87a84a65cc1298b",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "rev": "dacaba9b9a886bad92d25ba1d87a84a65cc1298b",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "meta-press-src": "meta-press-src",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
